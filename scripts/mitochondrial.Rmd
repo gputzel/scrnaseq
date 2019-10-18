@@ -1,0 +1,31 @@
+---
+title: "Percent mitochondrial genes"
+output:
+  flexdashboard::flex_dashboard:
+    vertical_layout: scroll
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(Seurat)
+library(plotly)
+```
+
+```{r include=FALSE}
+so <- readRDS(paste0('../',snakemake@input[['rds']]))
+```
+
+```{r include=FALSE}
+so[['percent.mt']] <- PercentageFeatureSet(so,pattern="^mt-")
+```
+
+```{r echo=FALSE}
+so@meta.data %>%
+    ggplot(aes(nFeature_RNA,percent.mt,Counts=nCount_RNA)) + geom_point() +
+    ggtitle('Cells') + xlab("Number of genes") + ylab("Percent mitochrondrial reads") +
+    geom_hline(yintercept = snakemake@config[['max.percent.mitochondrial']],linetype='dashed',color='red') + 
+    theme(plot.title=element_text(hjust=0.5))-> g
+ggplotly(g)
+```
+
+
