@@ -41,13 +41,13 @@ rule read_10X:
     script:
         "scripts/Read10X.R"
 
-rule raw_data_overview:
+rule overview:
     input:
-        rds="output/RData/Read10X/{sample}.rds"
+        rds="output/RData/SeuratObject/{sample}.rds"
     output:
-        "output/RawDataOverview/{sample}.html"
+        "output/Overview/{sample}.html"
     script:
-        "scripts/RawDataOverview.Rmd"
+        "scripts/Overview.Rmd"
 
 rule CreateSeuratObject:
     input:

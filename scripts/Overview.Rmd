@@ -1,0 +1,94 @@
+---
+title: "Overview"
+output:
+  flexdashboard::flex_dashboard:
+    vertical_layout: scroll
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(Seurat)
+library(plotly)
+library(gridExtra)
+```
+
+```{r include=FALSE}
+so <- readRDS(paste0('../',snakemake@input[['rds']]))
+```
+
+Cells
+=============================================================
+
+## .{tabset}
+
+### Linear
+
+```{r echo=FALSE}
+so@meta.data %>%
+    ggplot(aes(nCount_RNA)) + geom_histogram(binwidth=100) +
+    theme(axis.title.x=element_blank())-> hist.top
+empty <- ggplot()+geom_point(aes(1,1), colour="white")+
+         theme(axis.ticks=element_blank(), 
+               panel.background=element_blank(), 
+               axis.text.x=element_blank(), axis.text.y=element_blank(),           
+               axis.title.x=element_blank(), axis.title.y=element_blank())
+so@meta.data %>%
+    ggplot(aes(nCount_RNA,nFeature_RNA)) + geom_point() +
+    xlab("Total reads per cell") + ylab("Genes detected per cell") +
+    theme(plot.title=element_blank()) -> g.scatter
+so@meta.data %>%
+    ggplot(aes(nFeature_RNA)) + geom_histogram(binwidth=100) + coord_flip() +
+    theme(axis.title.y=element_blank())-> hist.right
+
+grid.arrange(hist.top, empty, g.scatter, hist.right, ncol=2, nrow=2, widths=c(4, 1), heights=c(1, 4))
+```
+
+### Log
+
+```{r echo=FALSE}
+so@meta.data %>%
+    mutate(nCount_log10 = log10(nCount_RNA)) %>%
+    mutate(nFeature_log10 = log10(nFeature_RNA)) -> df
+
+df %>%
+    ggplot(aes(nCount_log10)) + geom_histogram() +
+    theme(axis.title.x=element_blank())-> hist.top.log
+empty <- ggplot()+geom_point(aes(1,1), colour="white")+
+         theme(axis.ticks=element_blank(), 
+               panel.background=element_blank(), 
+               axis.text.x=element_blank(), axis.text.y=element_blank(),           
+               axis.title.x=element_blank(), axis.title.y=element_blank())
+df %>%
+    ggplot(aes(nCount_log10,nFeature_log10)) + geom_point() +
+    xlab("Total reads per cell (log10)") + ylab("Genes detected per cell (log10)") +
+    theme(plot.title=element_blank()) -> g.scatter.log
+df %>%
+    ggplot(aes(nFeature_log10)) + geom_histogram() + coord_flip() +
+    theme(axis.title.y=element_blank())-> hist.right.log
+
+grid.arrange(hist.top.log, empty, g.scatter.log, hist.right.log, ncol=2, nrow=2, widths=c(4, 1), heights=c(1, 4))
+```
+
+
+Genes
+=============================================================
+
+```{r echo=FALSE}
+counts <- GetAssayData(object=so,slot="counts")
+nonzero <- (counts > 0L)
+means <- rowMeans(as.matrix(counts))
+df <- data.frame(
+    gene=names(means),
+    avg.counts=means,
+    num.cells=rowMeans(as.matrix(nonzero))
+)
+df %>%
+    filter(avg.counts > 0) %>%
+    ggplot(aes(avg.counts,num.cells,gene=gene)) + geom_point() + scale_x_log10() +
+    xlab("Average counts across all cells") +
+    ylab("Fraction of cells with this gene detected") +
+    ggtitle("Genes") +
+    theme(plot.title=element_text(hjust=0.5)) -> g
+ggplotly(g)
+```
+
