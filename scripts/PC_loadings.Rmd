@@ -1,0 +1,35 @@
+---
+title: "Principal component loadings"
+output: html_document
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(Seurat)
+#library(plotly)
+```
+
+```{r include=FALSE}
+so <- readRDS(paste0('../',snakemake@input[['rds']]))
+#so <- readRDS('../output/RData/PCA/CD4_day14.rds')
+```
+
+```{r echo=FALSE,fig.height=6,fig.width=6}
+VizDimLoadings(so, dims = 1:2, reduction = "pca")
+```
+
+```{r echo=FALSE,fig.height=6,fig.width=6}
+VizDimLoadings(so, dims = 3:4, reduction = "pca")
+```
+
+```{r echo=FALSE,fig.height=6,fig.width=6}
+VizDimLoadings(so, dims = 5:6, reduction = "pca")
+```
+
+```{r echo=FALSE,fig.height=6,fig.width=6}
+VizDimLoadings(so, dims = 7:8, reduction = "pca")
+```
+
+```{r echo=FALSE,fig.height=6,fig.width=6}
+VizDimLoadings(so, dims = 9:10, reduction = "pca")
+```
