@@ -1,8 +1,8 @@
 {
     "min.cells":3,
-    "min.features":200,
-    "max.features":2500,
-    "max.percent.mitochondrial":5,
+    "min.features":600,
+    "max.features":5000,
+    "max.percent.mitochondrial":2,
     "normalization.method":"LogNormalize",
     "variable.selection.method":"vst",
     "num.variable.features":2000,
