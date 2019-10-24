@@ -1,0 +1,25 @@
+---
+title: "Most variable genes"
+output:
+  flexdashboard::flex_dashboard:
+    vertical_layout: scroll
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(Seurat)
+#library(plotly)
+```
+
+```{r include=FALSE}
+so <- readRDS(paste0('../',snakemake@input[['rds']]))
+#so <- readRDS('../output/RData/PCA/CD4_day14.rds')
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+top.20 <- head(VariableFeatures(so), 20)
+plot1 <- VariableFeaturePlot(so)
+plot2 <- suppressMessages(LabelPoints(plot = plot1, points = top.20, repel = TRUE))
+suppressMessages(plot2)
+```
+
