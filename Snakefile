@@ -120,3 +120,11 @@ rule Cluster:
         rds="output/RData/Cluster/{sample}/{plan}.rds"
     script:
         "scripts/cluster.R"
+
+rule PCA_plots:
+    input:
+        rds="output/RData/PCA/{sample}.rds"
+    output:
+        ["output/PCA_plots/{sample}/PC_" + str(i) + "_" + str(i+1) + ".pdf" for i in range(1,config["pca.plot.dims"])]
+    script:
+        "scripts/PCA_plots.R"

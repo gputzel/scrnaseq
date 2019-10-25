@@ -8,6 +8,7 @@
     "num.variable.features":2000,
     "scale.factor":10000,
     "elbow.plot.dims":30,
+    "pca.plot.dims":20,
     "cluster_plans":{
         "res_0.2":{
             "find.neighbors.dims":20,
