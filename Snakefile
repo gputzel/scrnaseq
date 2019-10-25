@@ -128,3 +128,11 @@ rule PCA_plots:
         ["output/PCA_plots/{sample}/PC_" + str(i) + "_" + str(i+1) + ".pdf" for i in range(1,config["pca.plot.dims"])]
     script:
         "scripts/PCA_plots.R"
+
+rule PCA_heatmaps:
+    input:
+        rds="output/RData/PCA/{sample}.rds"
+    output:
+        ["output/PCA_heatmaps/{sample}/PC_" + str(i) + ".pdf" for i in range(1,config["pca.plot.dims"] + 1)]
+    script:
+        "scripts/PCA_heatmaps.R"
