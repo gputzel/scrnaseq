@@ -136,3 +136,12 @@ rule PCA_heatmaps:
         ["output/PCA_heatmaps/{sample}/PC_" + str(i) + ".pdf" for i in range(1,config["pca.plot.dims"] + 1)]
     script:
         "scripts/PCA_heatmaps.R"
+
+rule UMAP:
+    input:
+        rds="output/RData/Cluster/{sample}/{plan}.rds"
+    output:
+        pdf="output/UMAP/{sample}/{plan}.pdf"
+    script:
+        "scripts/UMAP.R"
+
