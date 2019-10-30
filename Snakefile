@@ -57,6 +57,14 @@ rule CreateSeuratObject:
     script:
         "scripts/CreateSeuratObject.R"
 
+rule CountsLongForm:
+    input:
+       rds="output/RData/SeuratObject/{sample}.rds"
+    output:
+       rds="output/RData/CountsLongForm/{sample}.rds"
+    script:
+        "scripts/CountsLongForm.R" 
+
 rule PercentMitochondrial:
     input:
         rds="output/RData/SeuratObject/{sample}.rds"
