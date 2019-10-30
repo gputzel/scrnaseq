@@ -10,7 +10,7 @@ find.neighbors.dims <- cluster.plan$find.neighbors.dims
 
 so <- readRDS(snakemake@input[['rds']])
 
-so <- FindNeighbors(so,dims=find.neighbors.dims,
+so <- FindNeighbors(so,dims=1:find.neighbors.dims,
                     k.param = find.neighbors.k,
                     prune.SNN = find.neighbors.prune.SNN
                 )
