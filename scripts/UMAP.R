@@ -12,6 +12,4 @@ so <- readRDS(snakemake@input[['rds']])
 
 so <- RunUMAP(so,dims=1:find.neighbors.dims) #Use the same number of dimensions as in neigbor-finding
 
-g <- DimPlot(so,reduction="umap")
-
-ggsave(filename=snakemake@output[['pdf']],plot=g)
+saveRDS(object=so,file=snakemake@output[['rds']])
