@@ -149,9 +149,17 @@ rule UMAP:
     input:
         rds="output/RData/Cluster/{sample}/{plan}.rds"
     output:
-        pdf="output/UMAP/{sample}/{plan}.pdf"
+        rds="output/RData/UMAP/{sample}/{plan}.rds"
     script:
         "scripts/UMAP.R"
+
+rule UMAP_plot:
+    input:
+        rds="output/RData/UMAP/{sample}/{plan}.rds"
+    output:
+        pdf="output/UMAP/{sample}/{plan}.pdf"
+    script:
+        "scripts/UMAP_plot.R"
 
 rule violin:
     input:
@@ -160,3 +168,11 @@ rule violin:
         pdf="output/ViolinPlots/{sample}/{plan}.pdf"
     script:
         "scripts/ViolinPlot.R"
+
+rule feature_plot:
+    input:
+        rds="output/RData/Cluster/{sample}/{plan}.rds"
+    output:
+        pdf="output/FeaturePlots/{sample}/{plan}.pdf"
+    script:
+        "scripts/FeaturePlot.R"
