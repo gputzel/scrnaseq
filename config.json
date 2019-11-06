@@ -10,6 +10,12 @@
     "elbow.plot.dims":30,
     "pca.plot.dims":20,
     "cluster_plans":{
+        "res_0.01":{
+            "find.neighbors.dims":20,
+            "find.neighbors.k":20,
+            "find.neighbors.prune.SNN":0.0667,
+            "find.clusters.resolution":0.01
+        },
         "res_0.2":{
             "find.neighbors.dims":20,
             "find.neighbors.k":20,
@@ -33,9 +39,17 @@
             "find.neighbors.k":20,
             "find.neighbors.prune.SNN":0.0667,
             "find.clusters.resolution":0.8
+        },
+        "res_0.2_10_PCs":{
+            "find.neighbors.dims":10,
+            "find.neighbors.k":20,
+            "find.neighbors.prune.SNN":0.0667,
+            "find.clusters.resolution":0.2
         }
     },
-    "genes_of_interest":["Adrb2"],
+    "markers.min.pct":0.25,
+    "markers.logfc.threshold":0.25,
+    "genes_of_interest":["Adrb2","Cx3cr1","Tmem119","Ptprc","Adgre1","Cd68"],
     "samples":{
         "A3":{
             "features":{

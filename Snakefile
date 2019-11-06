@@ -176,3 +176,11 @@ rule feature_plot:
         pdf="output/FeaturePlots/{sample}/{plan}.pdf"
     script:
         "scripts/FeaturePlot.R"
+
+rule find_markers:
+    input:
+        rds="output/RData/Cluster/{sample}/{plan}.rds"
+    output:
+        rds="output/RData/Markers/{sample}/{plan}.rds"
+    script:
+        "scripts/FindMarkers.R"
