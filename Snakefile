@@ -171,7 +171,7 @@ rule violin:
 
 rule feature_plot:
     input:
-        rds="output/RData/Cluster/{sample}/{plan}.rds"
+        rds="output/RData/UMAP/{sample}/{plan}.rds"
     output:
         pdf="output/FeaturePlots/{sample}/{plan}.pdf"
     script:
