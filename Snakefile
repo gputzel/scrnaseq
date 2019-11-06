@@ -153,3 +153,10 @@ rule UMAP:
     script:
         "scripts/UMAP.R"
 
+rule violin:
+    input:
+        rds="output/RData/Cluster/{sample}/{plan}.rds"
+    output:
+        pdf="output/ViolinPlots/{sample}/{plan}.pdf"
+    script:
+        "scripts/ViolinPlot.R"
