@@ -31,6 +31,10 @@ def read_10X_input(wildcards):
     sample_config = config["samples"][sample]
     if "h5_path" in sample_config.keys():
         d["h5"] = sample_config["h5_path"]
+    if "barcodes" in sample_config.keys() and "genes" in sample_config.keys() and "matrix" in sample_config.keys():
+        d["barcodes"] = "output/10X_uncompressed/" + sample + "/barcodes.tsv"
+        d["genes"] = "output/10X_uncompressed/" + sample + "/genes.tsv"
+        d["matrix"] = "output/10X_uncompressed/" + sample + "/matrix.mtx"
     return d
 
 rule read_10X:
